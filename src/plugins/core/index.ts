@@ -188,9 +188,9 @@ export const currentSelection$ = Cell<RangeSelection | null>(null, (r) => {
       anchorNode.getKey() === 'root'
         ? anchorNode
         : $findMatchingParent(anchorNode, (e) => {
-            const parent = e.getParent()
-            return parent !== null && $isRootOrShadowRoot(parent)
-          })
+          const parent = e.getParent()
+          return parent !== null && $isRootOrShadowRoot(parent)
+        })
 
     if (element === null) {
       element = anchorNode.getTopLevelElementOrThrow()
@@ -442,6 +442,12 @@ export const editorInFocus$ = Cell<EditorInFocus | null>(null)
 export const onBlur$ = Signal<FocusEvent>()
 
 /**
+ * Emits when the editor loses focus
+ * @group Core
+ */
+export const onFocus$ = Signal<FocusEvent>()
+
+/**
  * A callback that returns the icon component for the given name.
  * @group Core
  */
@@ -636,6 +642,25 @@ export const createActiveEditorSubscription$ = Appender(activeEditorSubscription
               r.pubIn({
                 [inFocus$]: false,
                 [onBlur$]: payload
+              })
+            }
+          }
+          return false
+        },
+        COMMAND_PRIORITY_CRITICAL
+      )
+    },
+    (editor) => {
+      return editor.registerCommand(
+        FOCUS_COMMAND,
+        (payload) => {
+          const theRootEditor = r.getValue(rootEditor$)
+          if (theRootEditor) {
+            const movingInside = theRootEditor.getRootElement()?.contains(payload.relatedTarget as Node)
+            if (movingInside) {
+              r.pubIn({
+                [inFocus$]: true,
+                [onFocus$]: payload
               })
             }
           }
@@ -879,6 +904,7 @@ export const corePlugin = realmPlugin<{
   autoFocus: boolean | { defaultSelection?: 'rootStart' | 'rootEnd'; preventScroll?: boolean | undefined }
   onChange: (markdown: string, initialMarkdownNormalize: boolean) => void
   onBlur?: (e: FocusEvent) => void
+  onFocus?: (e: FocusEvent) => void
   onError?: (payload: { error: string; source: string }) => void
   toMarkdownOptions: NonNullable<LexicalConvertOptions['toMarkdownOptions']>
   readOnly: boolean

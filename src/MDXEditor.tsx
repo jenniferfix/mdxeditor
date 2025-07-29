@@ -284,6 +284,10 @@ export interface MDXEditorProps {
    */
   onBlur?: (e: FocusEvent) => void
   /**
+   * Triggered when focus enters the editor
+   */
+  onFocus?: (e: FocusEvent) => void
+  /**
    * The placeholder contents, displayed when the editor is empty.
    */
   placeholder?: React.ReactNode
@@ -335,6 +339,7 @@ export const MDXEditor = React.forwardRef<MDXEditorMethods, MDXEditorProps>((pro
           initialMarkdown: props.markdown,
           onChange: props.onChange ?? noop,
           onBlur: props.onBlur ?? noop,
+          onFocus: props.onFocus ?? noop,
           toMarkdownOptions: props.toMarkdownOptions ?? DEFAULT_MARKDOWN_OPTIONS,
           autoFocus: props.autoFocus ?? false,
           placeholder: props.placeholder ?? '',
