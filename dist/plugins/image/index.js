@@ -118,7 +118,8 @@ const imageDialogState$ = Cell(
             }
             const cbPayload = Array.from(((_b = event.clipboardData) == null ? void 0 : _b.items) ?? []);
             const isMixedPayload = cbPayload.some((item) => !item.type.includes("image"));
-            if (isMixedPayload) return false;
+            if (isMixedPayload)
+              return false;
             if (!cbPayload.length || cbPayload.length === 0) {
               return false;
             }

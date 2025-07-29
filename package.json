@@ -1,5 +1,9 @@
 {
-  "name": "mdxeditor",
+  "name": "@jenn.fyi/editor",
+  "contributors": [
+    "Petyo Ivanov",
+    "Jennifer Fix"
+  ],
   "author": "Petyo Ivanov",
   "homepage": "https://mdxeditor.dev/",
   "bugs": {
