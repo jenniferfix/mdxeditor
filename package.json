@@ -164,7 +164,6 @@
   "engines": {
     "node": ">=16"
   },
-  "packageManager": "npm@9.5.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/mdx-editor/editor.git"

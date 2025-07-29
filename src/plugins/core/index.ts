@@ -188,9 +188,9 @@ export const currentSelection$ = Cell<RangeSelection | null>(null, (r) => {
       anchorNode.getKey() === 'root'
         ? anchorNode
         : $findMatchingParent(anchorNode, (e) => {
-            const parent = e.getParent()
-            return parent !== null && $isRootOrShadowRoot(parent)
-          })
+          const parent = e.getParent()
+          return parent !== null && $isRootOrShadowRoot(parent)
+        })
 
     if (element === null) {
       element = anchorNode.getTopLevelElementOrThrow()
@@ -440,6 +440,12 @@ export const editorInFocus$ = Cell<EditorInFocus | null>(null)
  * @group Core
  */
 export const onBlur$ = Signal<FocusEvent>()
+
+/**
+ * Emits when the editor gets focus
+ * @group Core
+ */
+export const isFocus$ = Signal<FocusEvent>()
 
 /**
  * A callback that returns the icon component for the given name.
@@ -879,6 +885,7 @@ export const corePlugin = realmPlugin<{
   autoFocus: boolean | { defaultSelection?: 'rootStart' | 'rootEnd'; preventScroll?: boolean | undefined }
   onChange: (markdown: string, initialMarkdownNormalize: boolean) => void
   onBlur?: (e: FocusEvent) => void
+  onFocus?: (e: FocusEvent) => void
   onError?: (payload: { error: string; source: string }) => void
   toMarkdownOptions: NonNullable<LexicalConvertOptions['toMarkdownOptions']>
   readOnly: boolean

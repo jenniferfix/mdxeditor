@@ -237,6 +237,7 @@ const Methods: React.FC<{ mdxRef: React.ForwardedRef<MDXEditorMethods> }> = ({ m
  * @group MDXEditor
  */
 export interface MDXEditorProps {
+  onFocus?: (e: FocusEvent) => void
   /**
    * the CSS class to apply to the content editable element of the editor.
    * Use this to style the various content elements like lists and blockquotes.
@@ -335,6 +336,7 @@ export const MDXEditor = React.forwardRef<MDXEditorMethods, MDXEditorProps>((pro
           initialMarkdown: props.markdown,
           onChange: props.onChange ?? noop,
           onBlur: props.onBlur ?? noop,
+          onFocus: props.onFocus ?? noop,
           toMarkdownOptions: props.toMarkdownOptions ?? DEFAULT_MARKDOWN_OPTIONS,
           autoFocus: props.autoFocus ?? false,
           placeholder: props.placeholder ?? '',
