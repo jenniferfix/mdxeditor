@@ -1,6 +1,6 @@
 import React__default from "react";
 import { diffMarkdown$, readOnlyDiff$, cmExtensions$ } from "./index.js";
-import { markdown$, readOnly$, markdownSourceEditorValue$, onBlur$ } from "../core/index.js";
+import { markdown$, readOnly$, markdownSourceEditorValue$, onBlur$, onFocus$ } from "../core/index.js";
 import { MergeView } from "@codemirror/merge";
 import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
@@ -19,6 +19,7 @@ const DiffViewer = () => {
   const cmMergeViewRef = React__default.useRef(null);
   const cmExtensions = useCellValue(cmExtensions$);
   const triggerOnBlur = usePublisher(onBlur$);
+  const triggerOnFocus = usePublisher(onFocus$);
   React__default.useEffect(() => {
     return realm.sub(diffMarkdown$, (newDiffMarkdown) => {
       var _a;
@@ -67,6 +68,8 @@ const DiffViewer = () => {
           EditorView.focusChangeEffect.of((_, focused) => {
             if (!focused) {
               triggerOnBlur(new FocusEvent("blur"));
+            } else {
+              triggerOnFocus(new FocusEvent("focus"));
             }
             return null;
           })

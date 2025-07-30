@@ -547,6 +547,7 @@ const corePlugin = realmPlugin({
       params == null ? void 0 : params.onChange(value, r.getValue(initialMarkdownNormalize$));
     });
     r.singletonSub(onBlur$, params == null ? void 0 : params.onBlur);
+    r.singletonSub(onFocus$, params == null ? void 0 : params.onFocus);
     if (!(params == null ? void 0 : params.suppressHtmlProcessing)) {
       r.pubIn({
         [addMdastExtension$]: [mdxJsxFromMarkdown(), commentFromMarkdown()],
@@ -599,6 +600,7 @@ const corePlugin = realmPlugin({
       params == null ? void 0 : params.onChange(value, realm.getValue(initialMarkdownNormalize$));
     });
     realm.singletonSub(onBlur$, params == null ? void 0 : params.onBlur);
+    realm.singletonSub(onFocus$, params == null ? void 0 : params.onFocus);
     realm.singletonSub(markdownErrorSignal$, params == null ? void 0 : params.onError);
   }
 });

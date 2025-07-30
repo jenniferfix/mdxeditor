@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { cmExtensions$, diffMarkdown$, readOnlyDiff$ } from '.'
-import { markdown$, markdownSourceEditorValue$, onBlur$, readOnly$ } from '../core'
+import { markdown$, markdownSourceEditorValue$, onBlur$, onFocus$, readOnly$ } from '../core'
 
 import { MergeView } from '@codemirror/merge'
 import { EditorState } from '@codemirror/state'
@@ -23,6 +23,7 @@ export const DiffViewer: React.FC = () => {
   const cmMergeViewRef = React.useRef<MergeView | null>(null)
   const cmExtensions = useCellValue(cmExtensions$)
   const triggerOnBlur = usePublisher(onBlur$)
+  const triggerOnFocus = usePublisher(onFocus$)
 
   React.useEffect(() => {
     return realm.sub(diffMarkdown$, (newDiffMarkdown) => {
@@ -41,18 +42,18 @@ export const DiffViewer: React.FC = () => {
 
     const revertParams = isReadOnly
       ? ({
-          renderRevertControl: undefined,
-          revertControls: undefined
-        } as const)
+        renderRevertControl: undefined,
+        revertControls: undefined
+      } as const)
       : ({
-          renderRevertControl: () => {
-            const el = document.createElement('button')
-            el.classList.add('cm-merge-revert')
-            el.appendChild(document.createTextNode('\u2B95'))
-            return el
-          },
-          revertControls: 'a-to-b'
-        } as const)
+        renderRevertControl: () => {
+          const el = document.createElement('button')
+          el.classList.add('cm-merge-revert')
+          el.appendChild(document.createTextNode('\u2B95'))
+          return el
+        },
+        revertControls: 'a-to-b'
+      } as const)
 
     cmMergeViewRef.current = new MergeView({
       ...revertParams,
@@ -76,6 +77,8 @@ export const DiffViewer: React.FC = () => {
           EditorView.focusChangeEffect.of((_, focused) => {
             if (!focused) {
               triggerOnBlur(new FocusEvent('blur'))
+            } else {
+              triggerOnFocus(new FocusEvent('focus'))
             }
             return null
           })

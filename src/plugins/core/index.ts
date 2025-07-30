@@ -953,6 +953,7 @@ export const corePlugin = realmPlugin<{
       params?.onChange(value, r.getValue(initialMarkdownNormalize$))
     })
     r.singletonSub(onBlur$, params?.onBlur)
+    r.singletonSub(onFocus$, params?.onFocus)
 
     // Use the JSX extension to parse HTML
     if (!params?.suppressHtmlProcessing) {
@@ -1014,6 +1015,7 @@ export const corePlugin = realmPlugin<{
       params?.onChange(value, realm.getValue(initialMarkdownNormalize$))
     })
     realm.singletonSub(onBlur$, params?.onBlur)
+    realm.singletonSub(onFocus$, params?.onFocus)
     realm.singletonSub(markdownErrorSignal$, params?.onError)
   }
 })

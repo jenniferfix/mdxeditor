@@ -5,7 +5,7 @@ import { basicLight } from "cm6-theme-basic-light";
 import { basicSetup } from "codemirror";
 import React__default from "react";
 import { cmExtensions$ } from "./index.js";
-import { markdown$, readOnly$, markdownSourceEditorValue$, onBlur$ } from "../core/index.js";
+import { markdown$, readOnly$, markdownSourceEditorValue$, onBlur$, onFocus$ } from "../core/index.js";
 import { useCellValues, usePublisher } from "@mdxeditor/gurx";
 const COMMON_STATE_CONFIG_EXTENSIONS = [
   basicSetup,
@@ -18,6 +18,7 @@ const SourceEditor = () => {
   const [markdown2, readOnly, cmExtensions] = useCellValues(markdown$, readOnly$, cmExtensions$);
   const updateMarkdown = usePublisher(markdownSourceEditorValue$);
   const triggerOnBlur = usePublisher(onBlur$);
+  const triggerOnFocus = usePublisher(onFocus$);
   const editorViewRef = React__default.useRef(null);
   const ref = React__default.useCallback(
     (el) => {
@@ -33,6 +34,8 @@ const SourceEditor = () => {
           EditorView.focusChangeEffect.of((_, focused) => {
             if (!focused) {
               triggerOnBlur(new FocusEvent("blur"));
+            } else {
+              triggerOnFocus(new FocusEvent("focus"));
             }
             return null;
           })
@@ -50,7 +53,7 @@ const SourceEditor = () => {
         editorViewRef.current = null;
       }
     },
-    [markdown2, readOnly, updateMarkdown, cmExtensions, triggerOnBlur]
+    [markdown2, readOnly, updateMarkdown, cmExtensions, triggerOnBlur, triggerOnFocus]
   );
   return /* @__PURE__ */ React__default.createElement("div", { ref, className: "cm-sourceView mdxeditor-source-editor" });
 };

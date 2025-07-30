@@ -5,7 +5,7 @@ import { basicLight } from 'cm6-theme-basic-light'
 import { basicSetup } from 'codemirror'
 import React from 'react'
 import { cmExtensions$ } from '.'
-import { markdown$, markdownSourceEditorValue$, onBlur$, readOnly$ } from '../core'
+import { markdown$, markdownSourceEditorValue$, onBlur$, onFocus$, readOnly$ } from '../core'
 import { useCellValues, usePublisher } from '@mdxeditor/gurx'
 
 export const COMMON_STATE_CONFIG_EXTENSIONS: Extension[] = [
@@ -20,6 +20,7 @@ export const SourceEditor = () => {
   const [markdown, readOnly, cmExtensions] = useCellValues(markdown$, readOnly$, cmExtensions$)
   const updateMarkdown = usePublisher(markdownSourceEditorValue$)
   const triggerOnBlur = usePublisher(onBlur$)
+  const triggerOnFocus = usePublisher(onFocus$)
   const editorViewRef = React.useRef<EditorView | null>(null)
 
   const ref = React.useCallback(
@@ -35,6 +36,8 @@ export const SourceEditor = () => {
           EditorView.focusChangeEffect.of((_, focused) => {
             if (!focused) {
               triggerOnBlur(new FocusEvent('blur'))
+            } else {
+              triggerOnFocus(new FocusEvent('focus'))
             }
             return null
           })
@@ -52,7 +55,7 @@ export const SourceEditor = () => {
         editorViewRef.current = null
       }
     },
-    [markdown, readOnly, updateMarkdown, cmExtensions, triggerOnBlur]
+    [markdown, readOnly, updateMarkdown, cmExtensions, triggerOnBlur, triggerOnFocus]
   )
 
   return <div ref={ref} className="cm-sourceView mdxeditor-source-editor" />
