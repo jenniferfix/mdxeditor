@@ -100,8 +100,7 @@ function* rangeSearchScan(searchQuery, { allText, offsetIndex, nodeIndex }) {
 }
 const focusHighlightRange = (range) => {
   CSS.highlights.delete(MDX_FOCUS_SEARCH_NAME);
-  if (range)
-    CSS.highlights.set(MDX_FOCUS_SEARCH_NAME, new Highlight(range));
+  if (range) CSS.highlights.set(MDX_FOCUS_SEARCH_NAME, new Highlight(range));
 };
 const highlightRanges = (ranges) => {
   CSS.highlights.set(MDX_SEARCH_NAME, new Highlight(...ranges));
@@ -131,8 +130,7 @@ const scrollToRange = (range, contentEditable, options) => {
     const visibleTop = contentEditable.scrollTop;
     const visibleBottom = visibleTop + contentEditable.clientHeight;
     const inView = rangeTop >= visibleTop && rangeBottom <= visibleBottom;
-    if (inView)
-      return;
+    if (inView) return;
   }
   const top = topRelativeToContainer + contentEditable.scrollTop - first.height;
   contentEditable.scrollTo({ top, behavior });
@@ -206,15 +204,13 @@ function useEditorSearch() {
     realm.pub(editorSearchTermDebounced$, term ?? "");
   };
   const next = () => {
-    if (!ranges.length)
-      return;
+    if (!ranges.length) return;
     const newVal = cursor % ranges.length + 1;
     scrollToRangeOrIndex(newVal);
     realm.pub(editorSearchCursor$, newVal);
   };
   const prev = () => {
-    if (!ranges.length)
-      return;
+    if (!ranges.length) return;
     const newVal = cursor <= 1 ? ranges.length : cursor - 1;
     scrollToRangeOrIndex(newVal);
     realm.pub(editorSearchCursor$, newVal);
@@ -305,8 +301,7 @@ const searchPlugin = realmPlugin({
         focusHighlightRange(ranges[currentCursor - 1]);
         realm.pub(editorSearchCursor$, currentCursor);
         const scrollRange = ranges[currentCursor - 1];
-        if (!scrollRange)
-          throw new Error("error updating highlights, scroll range does not exist");
+        if (!scrollRange) throw new Error("error updating highlights, scroll range does not exist");
         const contentEditable = realm.getValue(editorSearchScollableContent$);
         scrollToRange(scrollRange, contentEditable, {
           ignoreIfInView: true

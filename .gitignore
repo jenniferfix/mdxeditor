@@ -8,3 +8,4 @@ uploads
 tsdoc-metadata.json
 .vscode
 .env
+dist

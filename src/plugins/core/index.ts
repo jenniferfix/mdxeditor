@@ -656,13 +656,10 @@ export const createActiveEditorSubscription$ = Appender(activeEditorSubscription
         (payload) => {
           const theRootEditor = r.getValue(rootEditor$)
           if (theRootEditor) {
-            const movingInside = theRootEditor.getRootElement()?.contains(payload.relatedTarget as Node)
-            if (movingInside) {
-              r.pubIn({
-                [inFocus$]: true,
-                [onFocus$]: payload
-              })
-            }
+            r.pubIn({
+              [inFocus$]: true,
+              [onFocus$]: payload
+            })
           }
           return false
         },

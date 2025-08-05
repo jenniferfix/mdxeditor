@@ -1,6 +1,3 @@
-/// <reference types="react" />
-
-import { Config } from 'mdast-util-from-markdown/lib';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { DecoratorNode } from 'lexical';
 import { default as default_2 } from 'react';
@@ -15,7 +12,7 @@ import { Extension } from 'micromark-util-types';
 import { Extension as Extension_2 } from '@codemirror/state';
 import { FC } from 'react';
 import { HeadingTagType } from '@lexical/rich-text';
-import { HistoryState } from '@lexical/history';
+import { HistoryState } from '@lexical/react/LexicalHistoryPlugin';
 import { KlassConstructor } from 'lexical';
 import * as lexical from 'lexical';
 import { LexicalCommand } from 'lexical';
@@ -211,7 +208,7 @@ export declare const addLexicalNode$: NodeRef< KlassConstructor<typeof LexicalNo
  * Adds a mdast extension to the markdown parser.
  * @group Markdown Processing
  */
-export declare const addMdastExtension$: NodeRef<Partial< Config> | Partial< Config>[] | (Partial< Config> | Partial< Config>[])[]>;
+export declare const addMdastExtension$: NodeRef< Extension | Extension[] | ( Extension | Extension[])[]>;
 
 /**
  * Lets you add React components as children of any registered nested editor (useful for Lexical plugins).
@@ -561,11 +558,11 @@ export declare const codeBlockPlugin: (params?: {
     /**
      * Pass an array of {@link CodeBlockEditorDescriptor} to register custom code block editors.
      */
-    codeBlockEditorDescriptors?: CodeBlockEditorDescriptor[] | undefined;
+    codeBlockEditorDescriptors?: CodeBlockEditorDescriptor[];
     /**
      * The default language to use when creating a new code block if no language is passed.
      */
-    defaultCodeBlockLanguage?: string | undefined;
+    defaultCodeBlockLanguage?: string;
 } | undefined) => RealmPlugin;
 
 /**
@@ -592,13 +589,13 @@ export declare const codeMirrorPlugin: (params?: {
     /**
      * Optional, additional CodeMirror extensions to load in the diff/source mode.
      */
-    codeMirrorExtensions?: Extension_2[] | undefined;
+    codeMirrorExtensions?: Extension_2[];
     /**
      * Whether or not to try to dynamically load the code block language support.
      * Disable if you want to manually pass the supported languages.
      * @group CodeMirror
      */
-    autoLoadLanguageSupport?: boolean | undefined;
+    autoLoadLanguageSupport?: boolean;
 } | undefined) => RealmPlugin;
 
 /**
@@ -872,7 +869,7 @@ export declare const DialogButton: default_2.ForwardRefExoticComponent<{
     /**
      * The autocomplete suggestions to show in the dialog input.
      */
-    autocompleteSuggestions?: string[] | undefined;
+    autocompleteSuggestions?: string[];
     /**
      * The callback to call when the dialog is submitted. The callback receives the value of the text input as a parameter.
      */
@@ -909,21 +906,21 @@ export declare const diffSourcePlugin: (params?: {
      * The initial view mode of the editor.
      * @default 'rich-text'
      */
-    viewMode?: ViewMode | undefined;
+    viewMode?: ViewMode;
     /**
      * The markdown to show in the diff editor.
      * @default ''
      */
-    diffMarkdown?: string | undefined;
+    diffMarkdown?: string;
     /**
      * Optional, additional CodeMirror extensions to load in the diff/source mode.
      */
-    codeMirrorExtensions?: Extension_2[] | undefined;
+    codeMirrorExtensions?: Extension_2[];
     /**
      * Set the diff editor to read-only.
      * @default false
      */
-    readOnlyDiff?: boolean | undefined;
+    readOnlyDiff?: boolean;
 } | undefined) => RealmPlugin;
 
 /**
@@ -1057,7 +1054,7 @@ export declare const directivesPlugin: (params?: {
      * Set this option to display unknown text-directives as normal text nodes.
      * This is handy when colons are used to separate words, e.g. in german "Schüler:in"
      */
-    escapeUnknownTextDirectives?: boolean | undefined;
+    escapeUnknownTextDirectives?: boolean;
 } | undefined) => RealmPlugin;
 
 /**
@@ -1329,7 +1326,7 @@ export declare const headingsPlugin: (params?: {
      * Allows you to limit the headings used in the editor. Affects the block type dropdown and the keyboard shortcuts.
      * @default [1, 2, 3, 4, 5, 6]
      */
-    allowedHeadingLevels?: readonly HEADING_LEVEL[] | undefined;
+    allowedHeadingLevels?: readonly HEADING_LEVEL[];
 } | undefined) => RealmPlugin;
 
 /* Excluded from this release type: historyState$ */
@@ -1412,14 +1409,14 @@ export declare const imagePlaceholder$: NodeRef< FC<{}> | null>;
  * @group Image
  */
 export declare const imagePlugin: (params?: {
-    imageUploadHandler?: ImageUploadHandler | undefined;
-    imageAutocompleteSuggestions?: string[] | undefined;
-    disableImageResize?: boolean | undefined;
-    disableImageSettingsButton?: boolean | undefined;
-    imagePreviewHandler?: ImagePreviewHandler | undefined;
-    ImageDialog?: FC<{}> | (() => JSX.Element) | undefined;
-    EditImageToolbar?: FC<{}> | (() => JSX.Element) | undefined;
-    imagePlaceholder?: (() => JSX.Element) | null | undefined;
+    imageUploadHandler?: ImageUploadHandler;
+    imageAutocompleteSuggestions?: string[];
+    disableImageResize?: boolean;
+    disableImageSettingsButton?: boolean;
+    imagePreviewHandler?: ImagePreviewHandler;
+    ImageDialog?: (() => JSX.Element) | React.FC;
+    EditImageToolbar?: (() => JSX.Element) | React.FC;
+    imagePlaceholder?: (() => JSX.Element) | null;
 } | undefined) => RealmPlugin;
 
 /**
@@ -1537,9 +1534,9 @@ export declare const insertDecoratorNode$: NodeRef<() => DecoratorNode<unknown>>
  * @group Directive
  */
 export declare const insertDirective$: NodeRef<{
-    type: Directives['type'];
+    type: Directives["type"];
     name: string;
-    attributes?: Directives['attributes'];
+    attributes?: Directives["attributes"];
 }>;
 
 /**
@@ -1580,15 +1577,15 @@ export declare type InsertImageParameters = FileImageParameters | SrcImageParame
  * @group JSX
  */
 export declare const insertJsx$: NodeRef<{
-    kind: 'text';
+    kind: "text";
     name: string;
     props: JsxProperties;
-    children?: Mdast.PhrasingContent[] | undefined;
+    children?: MdxJsxTextElement["children"];
 } | {
-    kind: 'flow';
+    kind: "flow";
     name: string;
     props: JsxProperties;
-    children?: (Mdast.BlockContent | Mdast.DefinitionContent)[] | undefined;
+    children?: MdxJsxFlowElement["children"];
 }>;
 
 /**
@@ -1626,11 +1623,11 @@ export declare const insertTable$: NodeRef<{
     /**
      * The nunber of rows of the table.
      */
-    rows?: number | undefined;
+    rows?: number;
     /**
      * The nunber of columns of the table.
      */
-    columns?: number | undefined;
+    columns?: number;
 }>;
 
 /**
@@ -1909,7 +1906,7 @@ export declare interface LexicalExportVisitor<LN extends LexicalNode, UN extends
     priority?: number;
 }
 
-export declare const lexicalTheme$: NodeRef<EditorThemeClasses>;
+export declare const lexicalTheme$: NodeRef<any>;
 
 export declare const lexicalTheme: EditorThemeClasses;
 
@@ -1928,19 +1925,19 @@ export declare const linkDialogPlugin: (params?: {
     /**
      * If passed, the link dialog will be rendered using this component instead of the default one.
      */
-    LinkDialog?: (() => JSX.Element) | undefined;
+    LinkDialog?: () => JSX.Element;
     /**
      * If passed, the link input field will autocomplete using the published suggestions.
      */
-    linkAutocompleteSuggestions?: string[] | undefined;
+    linkAutocompleteSuggestions?: string[];
     /**
      * If set, clicking on the link in the preview popup will call this callback instead of opening the link.
      */
-    onClickLinkCallback?: ClickLinkCallback | undefined;
+    onClickLinkCallback?: ClickLinkCallback;
     /**
      * Invoked when a link is clicked in read-only mode
      */
-    onReadOnlyClickLinkCallback?: ReadOnlyClickLinkCallback | undefined;
+    onReadOnlyClickLinkCallback?: ReadOnlyClickLinkCallback;
 } | undefined) => RealmPlugin;
 
 /**
@@ -1958,12 +1955,12 @@ export declare const linkPlugin: (params?: {
      * An optional function to validate the URL of a link.
      * By default, no validation is performed.
      */
-    validateUrl?: default_2.ComponentProps<typeof LinkPlugin>['validateUrl'];
+    validateUrl?: default_2.ComponentProps<typeof LinkPlugin>["validateUrl"];
     /**
      * Whether to disable the auto-linking of URLs and email addresses.
      * @default false
      */
-    disableAutoLink?: boolean | undefined;
+    disableAutoLink?: boolean;
 } | undefined) => RealmPlugin;
 
 /**
@@ -2709,7 +2706,7 @@ export declare const Select: <T extends string>(props: {
     items: ({
         label: string | JSX.Element;
         value: T;
-    } | 'separator')[];
+    } | "separator")[];
 }) => default_2.JSX.Element;
 
 /* Excluded from this release type: SelectButtonTrigger */
@@ -2813,8 +2810,8 @@ export declare const SingleChoiceToggleGroup: <T extends string>({ value, onChan
         value: T;
         contents: default_2.ReactNode;
     }[];
-    onChange: (value: T | '') => void;
-    value: T | '';
+    onChange: (value: T | "") => void;
+    value: T | "";
     ggClassName?: string;
     className?: string;
 }) => default_2.JSX.Element;
@@ -2962,11 +2959,11 @@ export declare const toolbarPlugin: (params?: {
     /**
      * The class name to apply to the toolbar element
      */
-    toolbarClassName?: string | undefined;
+    toolbarClassName?: string;
     /**
      * Controls the position of the toolbar (top by default)
      */
-    toolbarPosition?: "top" | "bottom" | undefined;
+    toolbarPosition?: "top" | "bottom";
 } | undefined) => RealmPlugin;
 
 /* Excluded from this release type: ToolbarToggleItem */

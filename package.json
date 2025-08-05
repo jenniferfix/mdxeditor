@@ -1,7 +1,6 @@
 {
-  "name": "@jenn.fyi/editor",
+  "name": "@catchat/editor",
   "author": "Petyo Ivanov",
-  "@jenn.fyi/editor": "github:jenniferfix/mdxeditor#onfocus-prop",
   "homepage": "https://mdxeditor.dev/",
   "bugs": {
     "url": "https://github.com/mdx-editor/editor/issues",
@@ -12,7 +11,7 @@
     "*.css"
   ],
   "type": "module",
-  "version": "0.0.3-development",
+  "version": "0.0.6-development",
   "description": "React component for rich text markdown editing",
   "scripts": {
     "build": "vite build",

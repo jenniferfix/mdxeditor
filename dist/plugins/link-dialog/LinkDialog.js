@@ -102,8 +102,7 @@ const LinkDialog = () => {
   }, [activeEditor, publishWindowChange]);
   const [copyUrlTooltipOpen, setCopyUrlTooltipOpen] = React__default.useState(false);
   const t = useTranslation();
-  if (linkDialogState.type === "inactive")
-    return null;
+  if (linkDialogState.type === "inactive") return null;
   const theRect = linkDialogState.rectangle;
   const urlIsExternal = linkDialogState.type === "preview" && linkDialogState.url.startsWith("http");
   return /* @__PURE__ */ React__default.createElement(RadixPopover.Root, { open: true }, /* @__PURE__ */ React__default.createElement(

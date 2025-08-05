@@ -363,16 +363,12 @@ const createActiveEditorSubscription$ = Appender(activeEditorSubscriptions$, (r,
       return editor.registerCommand(
         FOCUS_COMMAND,
         (payload) => {
-          var _a;
           const theRootEditor = r.getValue(rootEditor$);
           if (theRootEditor) {
-            const movingInside = (_a = theRootEditor.getRootElement()) == null ? void 0 : _a.contains(payload.relatedTarget);
-            if (movingInside) {
-              r.pubIn({
-                [inFocus$]: true,
-                [onFocus$]: payload
-              });
-            }
+            r.pubIn({
+              [inFocus$]: true,
+              [onFocus$]: payload
+            });
           }
           return false;
         },
