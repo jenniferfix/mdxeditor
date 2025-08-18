@@ -131,7 +131,8 @@ function ImageEditor({ src, title, alt, nodeKey, width, height, rest }) {
   React__default.useEffect(() => {
     if (imagePreviewHandler) {
       const callPreviewHandler = async () => {
-        if (!initialImagePath) setInitialImagePath(src);
+        if (!initialImagePath)
+          setInitialImagePath(src);
         const updatedSrc = await imagePreviewHandler(src);
         setImageSource(updatedSrc);
       };

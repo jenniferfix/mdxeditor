@@ -1,4 +1,4 @@
-/* empty css                   */
+import "./styles/globals.css.js";
 export * from "@mdxeditor/gurx";
 import { MDXEditor } from "./MDXEditor.js";
 import { defaultSvgIcons } from "./defaultSvgIcons.js";

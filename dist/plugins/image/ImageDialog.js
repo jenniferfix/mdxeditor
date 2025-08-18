@@ -21,7 +21,8 @@ const ImageDialog = () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     values: state.type === "editing" ? state.initialValues : {}
   });
-  if (state.type === "inactive") return null;
+  if (state.type === "inactive")
+    return null;
   return /* @__PURE__ */ React__default.createElement(
     Dialog.Root,
     {
